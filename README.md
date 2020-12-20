@@ -1,2 +1,2 @@
 # trailnerror
-Testing git
+Checking the github pages default view 
