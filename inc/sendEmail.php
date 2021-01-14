@@ -1,69 +1,76 @@
-﻿<?php
+<?php
+if (isset($_POST['Email'])) {
 
-// Replace this with your own email address
-$siteOwnersEmail = 'maxyodedara5@gmail.com';
+    // EDIT THE 2 LINES BELOW AS REQUIRED
+    $email_to = "maxyodedara5@gmail.com";
+    $email_subject = "TrailError";
 
+    function problem($error)
+    {
+        echo "We are very sorry, but there were error(s) found with the form you submitted. ";
+        echo "These errors appear below.<br><br>";
+        echo $error . "<br><br>";
+        echo "Please go back and fix these errors.<br><br>";
+        die();
+    }
 
-if($_POST) {
+    // validation expected data exists
+    if (
+        !isset($_POST['contactName']) ||
+        !isset($_POST['contactEmail']) ||
+        !isset($_POST['contactMessage'])
+    ) {
+        problem('We are sorry, but there appears to be a problem with the form you submitted.');
+    }
 
-   $name = trim(stripslashes($_POST['contactName']));
-   $email = trim(stripslashes($_POST['contactEmail']));
-   $subject = trim(stripslashes($_POST['contactSubject']));
-   $contact_message = trim(stripslashes($_POST['contactMessage']));
+    $name = trim(stripslashes($_POST['contactName'])); // required
+    $email = trim(stripslashes($_POST['contactEmail'])); // required
+    $message = trim(stripslashes($_POST['contactMessage'])); // required
 
-   // Check Name
-	if (strlen($name) < 2) {
-		$error['name'] = "Please enter your name.";
-	}
-	// Check Email
-	if (!preg_match('/^[a-z0-9&\'\.\-_\+]+@[a-z0-9\-]+\.([a-z0-9\-]+\.)*+[a-z]{2}/is', $email)) {
-		$error['email'] = "Please enter a valid email address.";
-	}
-	// Check Message
-	if (strlen($contact_message) < 15) {
-		$error['message'] = "Please enter your message. It should have at least 15 characters.";
-	}
-   // Subject
-	if ($subject == '') { $subject = "Contact Form Submission"; }
+    $error_message = "";
+    $email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';
 
+    if (!preg_match($email_exp, $email)) {
+        $error_message .= 'The Email address you entered does not appear to be valid.<br>';
+    }
 
-   // Set Message
-   $message .= "Email from: " . $name . "<br />";
-	$message .= "Email address: " . $email . "<br />";
-   $message .= "Message: <br />";
-   $message .= $contact_message;
-   $message .= "<br /> ----- <br /> This email was sent from your site's contact form. <br />";
+    $string_exp = "/^[A-Za-z .'-]+$/";
 
-   // Set From: header
-   $from =  $name . " <" . $email . ">";
+    if (!preg_match($string_exp, $name)) {
+        $error_message .= 'The Name you entered does not appear to be valid.<br>';
+    }
 
-   // Email Headers
-	$headers = "From: " . $from . "\r\n";
-	$headers .= "Reply-To: ". $email . "\r\n";
- 	$headers .= "MIME-Version: 1.0\r\n";
-	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+    if (strlen($message) < 2) {
+        $error_message .= 'The Message you entered do not appear to be valid.<br>';
+    }
 
+    if (strlen($error_message) > 0) {
+        problem($error_message);
+    }
 
-   if (!$error) {
+    $email_message = "Form details below.\n\n";
 
-      ini_set("sendmail_from", $siteOwnersEmail); // for windows server
-      $mail = mail($siteOwnersEmail, $subject, $message, $headers);
+    function clean_string($string)
+    {
+        $bad = array("content-type", "bcc:", "to:", "cc:", "href");
+        return str_replace($bad, "", $string);
+    }
 
-		if ($mail) { echo "OK"; }
-      else { echo "Something went wrong. Please try again."; }
-		
-	} # end if - no validation error
+    $email_message .= "Name: " . clean_string($name) . "\n";
+    $email_message .= "Email: " . clean_string($email) . "\n";
+    $email_message .= "Message: " . clean_string($message) . "\n";
 
-	else {
+    // create email headers
+    $headers = 'From: ' . $email . "\r\n" .
+        'Reply-To: ' . $email . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+    @mail($email_to, $email_subject, $email_message, $headers);
+?>
 
-		$response = (isset($error['name'])) ? $error['name'] . "<br /> \n" : null;
-		$response .= (isset($error['email'])) ? $error['email'] . "<br /> \n" : null;
-		$response .= (isset($error['message'])) ? $error['message'] . "<br />" : null;
-		
-		echo $response;
+    <!-- include your success message below -->
 
-	} # end if - there was a validation error
+    Thank you for contacting us. We will be in touch with you very soon.
 
+<?php
 }
-
 ?>
