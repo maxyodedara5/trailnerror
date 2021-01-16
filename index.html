@@ -6,7 +6,18 @@
 <!--<![endif]-->
 
 <head>
-
+	<!-- header 
+  
+	<script type="text/javascript">
+		function FormSubmit() { 
+		
+			
+				document.getElementById('texto').innerHTML = "Thanks for reaching out, I'll get back to you as soon as possible";
+				
+			
+		}
+	</script> 
+	================================================== -->
 	<!--- basic page needs
    ================================================== -->
 	<meta charset="utf-8">
@@ -28,6 +39,7 @@
    ================================================== -->
 	<script src="js/modernizr.js"></script>
 	<script src="js/pace.min.js"></script>
+	<script src="js/thankstext.js"></script>
 
 	<!-- favicons
 	================================================== -->
@@ -387,7 +399,6 @@
 
 				<h5>Contact</h5>
 				<h1>I'd Love To Hear From You.</h1>
-
 				<p class="lead">If you have any feedback, job opportunities or any mind blowing movie or TV series
 					recommendations :)</p>
 
@@ -401,57 +412,34 @@
 
 
 				<form action="https://formspree.io/f/meqpvwkg" method="POST">
-					<label>
-						Your email:
-						<input type="text" name="_replyto">
-					</label>
-					<label>
-						Your sub:
-						<input name="_subject" type="text" id="contactSubject" placeholder="Subject" value="">
-					</label>
-					
-					<label>
-						Your message:
-						<textarea name="message"></textarea>
-					</label>
-
-					<!-- your other form fields go here -->
-
-					<button type="submit">Send</button>
-				</form>
-
-
-				<!-- form -->
-				<form hidden name="asdfasdfcontactForm" id="contactForm" method="post"
-					action="https://formspree.io/f/meqpvwkg">
 					<fieldset>
-
-
+						<!-- your other form fields go here -->
 						<div class="form-field">
-							<input name="_replyto" type="email" id="contactEmail" placeholder="Email" value=""
-								required="">
+							<input name="_replyto" type="email" id="contactEmail" placeholder="Email" required=""
+								value="">
 						</div>
+
 						<div class="form-field">
 							<input name="_subject" type="text" id="contactSubject" placeholder="Subject" value="">
 						</div>
+
+
 						<div class="form-field">
-							<textarea name="body" id="contactMessage" placeholder="message" rows="10" cols="50"
-								required=""></textarea>
-						</div>
-						<div class="form-field">
-							<button class="submitform">Submit</button>
-							<div id="submit-loader">
-								<div class="text-loader">Sending...</div>
-								<div class="s-loader">
-									<div class="bounce1"></div>
-									<div class="bounce2"></div>
-									<div class="bounce3"></div>
-								</div>
-							</div>
+							<textarea name="message" placeholder="message" rows="4" cols="50"></textarea>
 						</div>
 
+						<div class="form-field">
+							<button class="submitform" type="submit" onclick="FormSubmit()">Submit</button>
+						</div>
+
+						<p id="texto" class="col-twelve"></p>
+
 					</fieldset>
-				</form> <!-- Form End -->
+
+				</form>
+
+
+
 
 				<!-- contact-warning -->
 				<div id="message-warning">
@@ -514,6 +502,7 @@
 					<li><a href="https://github.com/maxyodedara5/"><i class="fa fa-github"></i></a></li>
 					<li><a href="https://www.linkedin.com/in/mayurodedara/"><i class="fa fa-linkedin"></i></a></li>
 					<li><a href="mailto:maxyodedara5@gmail.com"><i class="fa fa-briefcase"></i></a></li>
+					<li><a href="mailto:maxyodedara5@gmail.com"><i class="fa fa"></i></a></li>
 				</ul>
 
 			</div>
